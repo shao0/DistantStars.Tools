@@ -38,7 +38,13 @@ public class Result
     /// 1. 返回一个预创建的空Result实例
     /// 2. 避免频繁创建新实例以提高性能
     /// </remarks>
-    public static Result Default() => Empty;
+    public static Result Default()
+    {
+        Empty.Status = false;
+        Empty.Message = string.Empty;
+        Empty.Data = null;
+        return Empty;
+    }
 }
 
 /// <summary>
@@ -69,5 +75,11 @@ public class Result<T> : Result
     /// 1. 返回一个预创建的空Result&lt;T&gt;实例
     /// 2. 避免频繁创建新实例以提高性能
     /// </remarks>
-    public new static Result<T> Default() => Empty;
+    public new static Result<T> Default()
+    {
+        Empty.Status = false;
+        Empty.Message = string.Empty;
+        Empty.Data = default;
+        return Empty;
+    }
 }
