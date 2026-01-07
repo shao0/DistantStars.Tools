@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -14,10 +14,34 @@ using DistantStars.Tools.Models;
 
 namespace DistantStars.Tools.Services;
 
+/// <summary>
+/// 文件服务实现类，提供文件操作相关功能
+/// </summary>
 public class FileService : IFileService
 {
+    /// <summary>
+    /// 缓存目录路径，用于存储本地缓存文件
+    /// </summary>
     private static readonly string ChachDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LocalCache");
 
+    /// <summary>
+    /// 比较并复制文件
+    /// </summary>
+    /// <param name="folder1Path">源文件夹路径1（从中获取要比较的文件列表）</param>
+    /// <param name="folder2Path">源文件夹路径2（从中获取要复制的文件）</param>
+    /// <param name="folder3Path">目标文件夹路径（复制文件到此位置）</param>
+    /// <returns>包含操作结果和详细信息的Result对象</returns>
+    /// <remarks>
+    /// 伪代码:
+    /// 1. 验证源文件夹路径是否存在
+    /// 2. 如果目标文件夹不存在，则创建它
+    /// 3. 获取文件夹1中的所有文件（包括子目录）
+    /// 4. 获取文件夹2中的所有文件（包括子目录）
+    /// 5. 将文件夹2中的文件名和路径存储到字典中，用于快速查找
+    /// 6. 遍历文件夹1中的每个文件
+    /// 7. 如果文件夹2中存在同名文件，则复制到目标文件夹
+    /// 8. 记录操作结果和详细信息
+    /// </remarks>
     public async Task<Result<IEnumerable<string>>> CompareAndCopyAsync(string folder1Path, string folder2Path, string folder3Path)
     {
         var result = Result<IEnumerable<string>>.Default();
@@ -29,7 +53,7 @@ public class FileService : IFileService
 
         if (!Directory.Exists(folder2Path))
         {
-            result.Message = $"文件夹1不存在: {folder2Path}";
+            result.Message = $"文件夹2不存在: {folder2Path}";  // 修复：原代码写的是"文件夹1不存在"
             return result;
         }
 
@@ -94,6 +118,18 @@ public class FileService : IFileService
         return result;
     }
 
+    /// <summary>
+    /// 异步选择文件夹
+    /// </summary>
+    /// <param name="title">文件夹选择对话框的标题</param>
+    /// <returns>包含所选文件夹路径的Result对象</returns>
+    /// <remarks>
+    /// 伪代码:
+    /// 1. 检查当前应用程序是否具有桌面样式生命周期
+    /// 2. 如果是，则显示文件夹选择对话框
+    /// 3. 如果用户选择了文件夹，则返回其绝对路径
+    /// 4. 否则返回空结果
+    /// </remarks>
     public async Task<Result<string>> SelectFolderAsync(string title)
     {
         var result = Result<string>.Default();
@@ -114,6 +150,18 @@ public class FileService : IFileService
         return result;
     }
 
+    /// <summary>
+    /// 打开指定路径的文件夹
+    /// </summary>
+    /// <param name="pathFolder">要打开的文件夹路径</param>
+    /// <returns>操作结果的Result对象</returns>
+    /// <remarks>
+    /// 伪代码:
+    /// 1. 检查应用程序是否具有桌面样式生命周期
+    /// 2. 验证文件夹路径是否存在
+    /// 3. 如果存在，则使用explorer.exe打开该文件夹
+    /// 4. 返回操作结果
+    /// </remarks>
     public async Task<Result> OpenFolderAsync(string pathFolder)
     {
         var result = Result.Default();
@@ -133,6 +181,20 @@ public class FileService : IFileService
         return result;
     }
 
+    /// <summary>
+    /// 异步写入缓存文件夹数据
+    /// </summary>
+    /// <param name="name">缓存文件的名称</param>
+    /// <param name="cacheFolder">要序列化的缓存文件夹对象</param>
+    /// <returns>操作结果的Result对象</returns>
+    /// <remarks>
+    /// 伪代码:
+    /// 1. 检查缓存文件夹对象是否为null
+    /// 2. 如果不为null，则将其序列化为JSON格式
+    /// 3. 确保缓存目录存在，如果不存在则创建
+    /// 4. 将JSON数据写入指定名称的文件
+    /// 5. 返回操作结果
+    /// </remarks>
     public async Task<Result> WriteCacheFolderAsync(string name, CacheFolder cacheFolder)
     {
         var result = Result.Default();
@@ -168,6 +230,19 @@ public class FileService : IFileService
         return result;
     }
 
+    /// <summary>
+    /// 异步读取缓存文件夹数据
+    /// </summary>
+    /// <param name="name">要读取的缓存文件名称</param>
+    /// <returns>包含缓存文件夹对象的Result对象</returns>
+    /// <remarks>
+    /// 伪代码:
+    /// 1. 构建缓存文件的完整路径
+    /// 2. 检查文件是否存在
+    /// 3. 如果存在，则反序列化JSON数据为CacheFolder对象
+    /// 4. 如果不存在，则返回错误信息
+    /// 5. 返回操作结果
+    /// </remarks>
     public async Task<Result<CacheFolder>> ReadCacheFolderAsync(string name)
     {
         var result = Result<CacheFolder>.Default();
@@ -195,8 +270,20 @@ public class FileService : IFileService
     }
 
 
+    /// <summary>
+    /// 获取指定文件夹中的所有文件路径
+    /// </summary>
+    /// <param name="folderPath">要搜索的文件夹路径</param>
+    /// <param name="includeSubdirectories">是否包含子目录中的文件</param>
+    /// <returns>文件路径列表</returns>
     private List<string> GetFileNames(string folderPath, bool includeSubdirectories = false) => Directory.GetFiles(folderPath, "*", includeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
 
+    /// <summary>
+    /// 异步复制文件到目标位置
+    /// </summary>
+    /// <param name="sourcePath">源文件路径</param>
+    /// <param name="destinationPath">目标文件路径</param>
+    /// <returns>异步任务</returns>
     private async Task CopyFileAsync(string sourcePath, string destinationPath)
     {
         // 确保目标目录存在
