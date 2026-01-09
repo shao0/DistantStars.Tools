@@ -1,4 +1,5 @@
-﻿using DistantStars.Tools.Services;
+﻿using DistantStars.Tools.Core.Extensions;
+using DistantStars.Tools.Services;
 using DistantStars.Tools.ViewModels;
 using DistantStars.Tools.Views;
 using Microsoft.Extensions.DependencyInjection;

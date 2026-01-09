@@ -4,9 +4,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using DistantStars.Tools.Core.Modularity;
 using DistantStars.Tools.Extensions;
-using DistantStars.Tools.Services;
-using DistantStars.Tools.ViewModels;
 using DistantStars.Tools.Views;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,8 +21,13 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        
-        _serviceProvider = new ServiceCollection().AddCommandServices().BuildServiceProvider();
+        var serviceCollection = new ServiceCollection();
+        _serviceProvider =  serviceCollection
+            .BuildModuleCatalog()
+            .AddModules()
+            .RunModularity(serviceCollection)
+            .AddCommandServices()
+            .BuildServiceProvider();
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 

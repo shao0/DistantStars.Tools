@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DistantStars.Tools.Contracts;
+using DistantStars.Tools.Core.Contracts;
 using DistantStars.Tools.Models;
 using DistantStars.Tools.Services;
 

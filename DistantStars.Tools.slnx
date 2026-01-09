@@ -1,3 +1,12 @@
 <Solution>
+  <Folder Name="/Cores/">
+    <Project Path="Cores/DistantStars.Tools.Core/DistantStars.Tools.Core.csproj" />
+  </Folder>
+  <Folder Name="/Modules/">
+    <Project Path="Modules/DistantStars.Module.Game/DistantStars.Module.Game.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
   <Project Path="DistantStars.Tools/DistantStars.Tools.csproj" />
 </Solution>

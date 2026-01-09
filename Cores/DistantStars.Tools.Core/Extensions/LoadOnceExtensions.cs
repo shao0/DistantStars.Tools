@@ -1,10 +1,10 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using DistantStars.Tools.Contracts;
+using DistantStars.Tools.Core.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DistantStars.Tools.Extensions;
+namespace DistantStars.Tools.Core.Extensions;
 
 /// <summary>
 /// ILoadOnce 接口的扩展方法，用于在控件加载时自动执行一次性加载逻辑
