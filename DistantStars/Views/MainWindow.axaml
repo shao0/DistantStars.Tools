@@ -1,0 +1,18 @@
+<Window
+    x:Class="DistantStars.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:Avalonia.Data.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:DistantStars.ViewModels"
+    Title="文件夹比较和复制工具"
+    Width="600"
+    Height="500"
+    Padding="10"
+    d:DesignHeight="500"
+    d:DesignWidth="600"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/avalonia-logo.ico"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d" />

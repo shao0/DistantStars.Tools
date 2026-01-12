@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="Clients/DistantStars/App.axaml" value="Clients/DistantStars/DistantStars.csproj" />
+        <entry key="DistantStars.Tools/App.axaml" value="DistantStars.Tools/DistantStars.Tools.csproj" />
+        <entry key="DistantStars/App.axaml" value="DistantStars/DistantStars.csproj" />
+        <entry key="DistantStars/Views/MainWindow.axaml" value="DistantStars/DistantStars.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

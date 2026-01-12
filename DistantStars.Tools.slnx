@@ -1,12 +1,18 @@
 <Solution>
+  <Folder Name="/Clients/">
+    <Project Path="Clients/DistantStars.Client.Contracts/DistantStars.Client.Contracts.csproj" />
+    <Project Path="Clients/DistantStars.Client.Core/DistantStars.Client.Core.csproj" />
+    <Project Path="Clients/DistantStars.Client.Services/DistantStars.Client.Services.csproj" />
+  </Folder>
   <Folder Name="/Cores/">
-    <Project Path="Cores/DistantStars.Tools.Core/DistantStars.Tools.Core.csproj" />
+    <Project Path="Cores/DistantStars.Core/DistantStars.Core.csproj" />
   </Folder>
   <Folder Name="/Modules/">
-    <Project Path="Modules/DistantStars.Module.Game/DistantStars.Module.Game.csproj" />
+    <Project Path="Modules/Module.Game/Module.Game.csproj" />
+    <Project Path="Modules/Module.Tools/Module.Tools.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
-  <Project Path="DistantStars.Tools/DistantStars.Tools.csproj" />
+  <Project Path="DistantStars/DistantStars.csproj" />
 </Solution>
