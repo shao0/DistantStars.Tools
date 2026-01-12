@@ -1,14 +1,34 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DistantStars.Tools.Core.Modularity;
 
-// 4. 模块管理器：负责干活（加载、实例化、执行）
+/// <summary>
+/// 模块管理器的实现类，负责加载、实例化和执行应用程序中的模块
+/// </summary>
+/// <remarks>
+/// 伪代码:
+/// 1. 接收模块目录和服务集合作为依赖项
+/// 2. 实现 Run 方法执行核心流程：加载 -> 注册 -> 初始化
+/// 3. 实现 LoadAssembly 方法处理DLL加载
+/// 4. 按照模块生命周期管理模块的注册和初始化
+/// </remarks>
 internal class ModuleManager(IModuleCatalog catalog, IServiceCollection services) : IModuleManager
 {
-    // DI 容器构建器
-
-    // 核心流程：加载 -> 注册 -> 初始化
+    /// <summary>
+    /// 运行模块管理器，启动模块加载和初始化过程
+    /// </summary>
+    /// <remarks>
+    /// 伪代码:
+    /// 1. 输出开始加载模块程序集的日志
+    /// 2. 遍历模块目录中的所有模块信息
+    /// 3. 对每个模块调用 LoadAssembly 方法加载程序集
+    /// 4. 输出执行模块服务注册的日志
+    /// 5. 遍历模块目录中的所有模块信息
+    /// 6. 对于每个具有模块类型的模块，创建实例并注册服务
+    /// 7. 构建服务提供者
+    /// 8. 对每个模块实例调用 OnInitialized 方法进行初始化
+    /// </remarks>
     public void Run()
     {
         Console.WriteLine("--------------------------------------------------");
@@ -50,7 +70,18 @@ internal class ModuleManager(IModuleCatalog catalog, IServiceCollection services
         Console.WriteLine("--------------------------------------------------");
     }
 
-    // 辅助逻辑：处理 DLL 加载
+    /// <summary>
+    /// 加载指定模块信息的程序集
+    /// </summary>
+    /// <param name="info">模块信息</param>
+    /// <remarks>
+    /// 伪代码:
+    /// 1. 检查模块类型是否为空且程序集路径不为空
+    /// 2. 如果满足条件，使用 Assembly.LoadFrom 从路径加载程序集
+    /// 3. 在程序集中查找实现 IModule 接口的非抽象类
+    /// 4. 如果找到类型，更新模块信息的类型和名称
+    /// 5. 捕获异常并输出错误日志
+    /// </remarks>
     private void LoadAssembly(IModuleInfo info)
     {
         // 如果只有路径（来自目录扫描），需要反射加载 Assembly

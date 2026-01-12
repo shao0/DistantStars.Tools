@@ -7,13 +7,15 @@ using Microsoft.Extensions.DependencyInjection;
 namespace DistantStars.Tools.Core.Extensions;
 
 /// <summary>
-/// ILoadOnce 接口的扩展方法，用于在控件加载时自动执行一次性加载逻辑
+/// 提供对 ILoadOnce 接口的扩展方法，用于在控件加载时自动执行一次性加载逻辑
 /// </summary>
 /// <remarks>
 /// 伪代码:
-/// 1. 定义扩展方法 RegisterLoadOnce，用于注册支持一次性加载的视图和视图模型
-/// 2. 创建工厂方法 LoadOnceFactory，负责创建视图实例并设置数据上下文
-/// 3. 实现 ControlOnLoaded 事件处理器，在控件加载时调用 ILoadOnce 接口的 LoadOnce 方法
+/// 1. 定义静态扩展类 LoadOnceExtensions
+/// 2. 定义扩展方法 RegisterLoadOnce，用于注册支持一次性加载的视图和视图模型
+/// 3. 创建工厂方法 LoadOnceFactory，负责创建视图实例并设置数据上下文
+/// 4. 实现 ControlOnLoaded 事件处理器，在控件加载时调用 ILoadOnce 接口的 LoadOnce 方法
+/// 5. 确保事件处理器仅执行一次，避免重复加载
 /// </remarks>
 public static class LoadOnceExtensions
 {
