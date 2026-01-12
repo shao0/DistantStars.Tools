@@ -3,6 +3,10 @@
 // 3. 模块目录：负责存储模块清单
 internal class ModuleCatalog : IModuleCatalog
 {
+    private ModuleCatalog(){}
+
+    public static ModuleCatalog Instance { get; } = new();
+
     public IEnumerable<IModuleInfo> Modules => _Modules;
     List<ModuleInfo> _Modules { get; } = [];
 

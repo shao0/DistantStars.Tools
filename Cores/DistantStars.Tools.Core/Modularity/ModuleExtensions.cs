@@ -8,17 +8,14 @@ public static class ModuleExtensions
     public static IModuleCatalog BuildModuleCatalog(this IServiceCollection services)
     {
         services.TryAddSingleton(services);
-        services.TryAddScoped<IModuleInfo, ModuleInfo>();
-        services.TryAddSingleton<IModuleCatalog, ModuleCatalog>();
+        var moduleCatalog = ModuleCatalog.Instance;
+        services.TryAddSingleton<IModuleCatalog>(moduleCatalog);
         services.TryAddSingleton<IModuleManager, ModuleManager>();
-        using var provider = services.BuildServiceProvider();
-        return provider.GetRequiredService<IModuleCatalog>();
+        return moduleCatalog;
     }
 
     public static IServiceCollection RunModularity(this IModuleCatalog catalog, IServiceCollection services)
     {
-        services.RemoveAll<IModuleCatalog>();
-        services.TryAddSingleton(catalog);
         using var provider = services.BuildServiceProvider();
         provider.GetRequiredService<IModuleManager>().Run();
         return services;
